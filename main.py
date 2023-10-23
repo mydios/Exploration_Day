@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from httpx import AsyncClient
-from secret import connection_string
 from motor.motor_asyncio import AsyncIOMotorClient
 
 import os
