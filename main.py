@@ -16,6 +16,10 @@ app = FastAPI()
 client = AsyncIOMotorClient(os.getenv("CONNECTION_STRING"))
 db = client["dylanvanparysDotCom"]
 
+@app.get("/hello")
+async def hello():
+    return {"hello": "world"}
+
 @app.get("/")
 async def root():
     projection = {"_id": 0}
