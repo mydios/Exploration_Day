@@ -13,8 +13,6 @@ except:
     print("PRODUCTION DETECTED")
 
 app = FastAPI()
-client = AsyncIOMotorClient(os.getenv("CONNECTION_STRING"))
-db = client["dylanvanparysDotCom"]
 
 @app.get("/hello")
 async def hello():
@@ -22,12 +20,16 @@ async def hello():
 
 @app.get("/")
 async def root():
+    client = AsyncIOMotorClient(os.getenv("CONNECTION_STRING"))
+    db = client["dylanvanparysDotCom"]
     projection = {"_id": 0}
     weight_entries = await db["weight"].find({}, projection).to_list(length=None)
     return {"message": "Hello World", "weight_entries": weight_entries}
 
 @app.get("/rolling-average")
 async def calculate_rolling_average():
+    client = AsyncIOMotorClient(os.getenv("CONNECTION_STRING"))
+    db = client["dylanvanparysDotCom"]
     # Use async/await to retrieve all documents
     projection = {"_id": 0}
     cursor = db["weight"].find({}, projection)
